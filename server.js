@@ -36,6 +36,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Durahman Application" })
 })
 
+// routes
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
+
 // set port listen for request
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

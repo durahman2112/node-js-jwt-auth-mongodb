@@ -7,6 +7,7 @@ var jwt = require("jsonwebtoken");
 var bycrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
+  console.log("masuk signup");
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -16,17 +17,19 @@ exports.signup = (req, res) => {
   user.save((err, user) => {
     if (err) {
       res.status(500).send({ message: err })
+      console.log("error 1");
       return
     }
 
     if (req.body.roles) {
       Role.find(
         {
-          _id: { $in: req.body.roles }
+          name: { $in: req.body.roles }
         },
         (err, roles) => {
           if (err) {
             res.status(500).send({ message: err });
+            console.log("error 2");
             return;
           }
 
@@ -34,6 +37,7 @@ exports.signup = (req, res) => {
           user.save(err => {
             if (err) {
               res.status(500).send({ message: err });
+              console.log("error 3");
               return;
             }
 
@@ -45,6 +49,7 @@ exports.signup = (req, res) => {
       Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
           res.status(500).send({ message: err });
+          console.log("error disini 1");
           return;
         }
 
@@ -52,6 +57,7 @@ exports.signup = (req, res) => {
         user.save(err => {
           if (err) {
             res.status(500).send({ message: err });
+            console.log("error disini 2");
             return;
           }
 
